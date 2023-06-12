@@ -1,0 +1,42 @@
+version: '3'
+services:
+    documenso:
+        container_name: documenso
+        working_dir: /app
+        image: documenso:latest
+        build: .
+        environment:
+            - DATABASE_URL=postgres://documenso:password@database/documenso
+            - NEXT_PUBLIC_WEBAPP_URL=http://localhost:8030
+            - NEXTAUTH_SECRET=WoiD87I2XiVxSUiCzYmdqgoW7jGvmKHQ
+            - NEXTAUTH_URL=http://localhost:8030
+            - SENDGRID_API_KEY=
+            - SMTP_MAIL_HOST=inbucket
+            - SMTP_MAIL_PORT=2500
+            - SMTP_MAIL_USER=documenso
+            - SMTP_MAIL_PASSWORD=password
+            - MAIL_FROM=hello@documenso.com
+            - NEXT_PUBLIC_ALLOW_SIGNUP=true
+            - NEXT_PUBLIC_ALLOW_SUBSCRIPTIONS=false
+        ports:
+        - 3000:3000
+
+    database:
+        image: postgres:15
+        container_name: database
+        environment:
+        - POSTGRES_USER=documenso
+        - POSTGRES_PASSWORD=password
+        - POSTGRES_DB=documenso
+        ports:
+            - 5432:5432
+        volumes:
+            - ./postgres:/var/lib/postgresql/data
+
+    inbucket:
+        image: inbucket/inbucket
+        container_name: inbucket
+        ports:
+            - 9000:9000
+            - 2500:2500
+            - 1100:1100
