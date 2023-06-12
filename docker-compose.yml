@@ -7,9 +7,9 @@ services:
         build: .
         environment:
             - DATABASE_URL=postgres://documenso:password@database/documenso
-            - NEXT_PUBLIC_WEBAPP_URL=http://localhost:8030
+            - NEXT_PUBLIC_WEBAPP_URL=http://localhost:3000
             - NEXTAUTH_SECRET=WoiD87I2XiVxSUiCzYmdqgoW7jGvmKHQ
-            - NEXTAUTH_URL=http://localhost:8030
+            - NEXTAUTH_URL=http://localhost:3000
             - SENDGRID_API_KEY=
             - SMTP_MAIL_HOST=inbucket
             - SMTP_MAIL_PORT=2500
@@ -22,7 +22,7 @@ services:
         - 3000:3000
 
     database:
-        image: postgres:15
+        image: postgres:alpine
         container_name: database
         environment:
         - POSTGRES_USER=documenso

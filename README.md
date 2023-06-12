@@ -185,43 +185,13 @@ For the digital signature of your documents you need a signing certificate in .p
 
 # Docker
 
-> We are still working on the publishing of docker images, in the meantime you can follow the steps below to create a production ready docker image.
+To build docker image
+`docker build -t documenso:latest .`
 
-Want to create a production ready docker image? Follow these steps:
+#### Using Docker run
+`docker run -d -p 3000:3000 -v "${PWD}/.env:/app/.env" documenso:latest`
 
-- Run `./docker/build.sh` in the root directory.
-- Publish the image to your docker registry of choice.
+#### Using Docker-compose
+This created postgres database and inbucket for SMTP server. if you don't need them then please make sure to comment those and update environment variables under the main container or use .env file.
+`docker-compose up -d`
 
-# Deploying - Coming Soon™
-
-- Docker support
-- One-Click-Deploy on Render.com Deploy
-
-# Troubleshooting
-
-## Support IPv6
-
-In case you are deploying to a cluster that uses only IPv6. You can use a custom command to pass a parameter to the NextJS start command
-
-For local docker run
-
-```bash
-docker run -it documenso:latest npm run start -- -H ::
-```
-
-For k8s or docker-compose
-
-```yaml
-containers:
-  - name: documenso
-    image: documenso:latest
-    imagePullPolicy: IfNotPresent
-    command:
-      - npm
-    args:
-      - run
-      - start
-      - --
-      - -H
-      - "::"
-```
